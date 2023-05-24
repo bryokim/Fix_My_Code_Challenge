@@ -13,14 +13,13 @@ class User():
     - password: private string hash in MD5
     """
 
-    __password = None
-
     def __init__(self):
         """
         Initialize a new user:
         - assigned an unique `id`
         """
         self.id = str(uuid.uuid4())
+        self.password = None
 
     @property
     def password(self):
@@ -40,10 +39,7 @@ class User():
         if pwd is None or type(pwd) is not str:
             self.__password = None
         else:
-            print('setting')
-            self._password = hashlib.md5(pwd.encode()).hexdigest().lower()
-
-        print(self.__password)
+            self.__password = hashlib.md5(pwd.encode()).hexdigest().lower()
 
     def is_valid_password(self, pwd):
         """
@@ -53,14 +49,11 @@ class User():
         - `False` if `__password` is `None`
         - Compare `__password` and the MD5 value of `pwd`
         """
-        print(self.password, pwd)
         if pwd is None or type(pwd) is not str:
             return False
         if self.password is None:
             return False
-        print(self.__password)
-        print(hashlib.md5(pwd.encode()).hexdigest().lower())
-        return hashlib.md5(pwd.encode()).hexdigest().lower() == self.__password
+        return hashlib.md5(pwd.encode()).hexdigest().lower() == self.password
 
 
 if __name__ == '__main__':
